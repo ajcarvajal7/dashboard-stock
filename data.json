@@ -1,0 +1,41 @@
+[
+  {
+    "SKU": "100001",
+    "Nombre": "Producto A",
+    "StockMatriz": 15,
+    "Costo": 10000,
+    "Precio40": 16667,
+    "Precio45": 18182,
+    "Precio50": 20000,
+    "Proveedor": "Proveedor Uno",
+    "Familia": "Endoscopia",
+    "StockTemporal": 5,
+    "StockTotal": 20
+  },
+  {
+    "SKU": "100002",
+    "Nombre": "Producto B",
+    "StockMatriz": 0,
+    "Costo": 25000,
+    "Precio40": 41667,
+    "Precio45": 45455,
+    "Precio50": 50000,
+    "Proveedor": "Proveedor Dos",
+    "Familia": "Neurocirugía",
+    "StockTemporal": 3,
+    "StockTotal": 3
+  },
+  {
+    "SKU": "100003",
+    "Nombre": "Producto C",
+    "StockMatriz": 8,
+    "Costo": 7300,
+    "Precio40": 12167,
+    "Precio45": 13273,
+    "Precio50": 14600,
+    "Proveedor": "Proveedor Uno",
+    "Familia": "Consumibles",
+    "StockTemporal": 0,
+    "StockTotal": 8
+  }
+]

@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard Stock y Precios</title>
+  <style>
+    :root {
+      --card: #ffffff;
+      --line: #d9e5f7;
+      --text: #132e57;
+      --muted: #5b6880;
+      --primary: #3271d2;
+      --primary-dark: #002060;
+      --success: #eef6ff;
+      --shadow: 0 10px 28px rgba(19, 46, 87, 0.10);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Calibri, "Segoe UI", Arial, sans-serif;
+      background: linear-gradient(180deg, #f8fbff 0%, #edf3fb 100%);
+      color: var(--text);
+    }
+
+    .container {
+      max-width: 1450px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+      color: white;
+      border-radius: 22px;
+      padding: 28px;
+      box-shadow: var(--shadow);
+      margin-bottom: 20px;
+    }
+
+    .hero h1 {
+      margin: 0 0 8px 0;
+      font-size: 30px;
+      line-height: 1.1;
+    }
+
+    .hero p {
+      margin: 0;
+      opacity: 0.95;
+      font-size: 15px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      gap: 20px;
+      align-items: start;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      padding: 18px;
+    }
+
+    .card h2 {
+      margin: 0 0 14px 0;
+      font-size: 18px;
+    }
+
+    .muted {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.45;
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      margin: 12px 0 6px;
+    }
+
+    input[type="text"], select {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #cbd8ee;
+      border-radius: 10px;
+      font-size: 14px;
+      outline: none;
+      background: white;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+
+    button {
+      border: none;
+      border-radius: 10px;
+      padding: 11px 14px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.15s ease, opacity 0.15s ease;
+    }
+
+    button:hover { transform: translateY(-1px); }
+    button:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-secondary {
+      background: #eaf2ff;
+      color: var(--primary-dark);
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    .stat {
+      background: var(--success);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 14px;
+    }
+
+    .stat .label {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .stat .value {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--primary-dark);
+    }
+
+    .table-wrap {
+      overflow: auto;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: white;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 1200px;
+    }
+
+    thead th {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      background: #f1f6fe;
+      color: var(--primary-dark);
+      font-size: 13px;
+      text-align: left;
+      padding: 12px 10px;
+      border-bottom: 1px solid var(--line);
+      white-space: nowrap;
+    }
+
+    tbody td {
+      padding: 10px;
+      border-bottom: 1px solid #edf2fa;
+      font-size: 13px;
+      vertical-align: top;
+    }
+
+    tbody tr:hover {
+      background: #fafcff;
+    }
+
+    .right { text-align: right; }
+    .center { text-align: center; }
+
+    .pill {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: #edf4ff;
+      color: var(--primary-dark);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .status {
+      margin-top: 12px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      font-size: 13px;
+      display: none;
+    }
+
+    .status.show { display: block; }
+    .status.ok { background: #edf8f1; color: #1d6b3c; border: 1px solid #cfead8; }
+    .status.error { background: #fff1f1; color: #a12f2f; border: 1px solid #f1c9c9; }
+
+    .small-note {
+      margin-top: 14px;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    code.inline {
+      background: #f3f7ff;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 2px 6px;
+      font-size: 12px;
+    }
+
+    @media (max-width: 1100px) {
+      .layout { grid-template-columns: 1fr; }
+      .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 650px) {
+      .container { padding: 14px; }
+      .hero h1 { font-size: 24px; }
+      .stats { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <h1>Dashboard Stock y Precios Recomendados</h1>
+      <p>Este dashboard lee automáticamente la última versión del stock desde un archivo <strong>data.json</strong>.</p>
+    </div>
+
+    <div class="layout">
+      <div class="card">
+        <h2>Filtros y estado</h2>
+        <div class="muted">Comparte solo este dashboard una vez. Luego, cuando actualices <span class="inline">data.json</span>, los usuarios verán la nueva información al recargar la página.</div>
+
+        <label for="searchInput">Buscar texto</label>
+        <input type="text" id="searchInput" placeholder="SKU, nombre, proveedor o familia" />
+
+        <label for="providerFilter">Filtrar por Proveedor</label>
+        <select id="providerFilter">
+          <option value="all">Todos los proveedores</option>
+        </select>
+
+        <label for="familyFilter">Filtrar por Familia</label>
+        <select id="familyFilter">
+          <option value="all">Todas las familias</option>
+        </select>
+
+        <label for="stockFilter">Filtro de stock total</label>
+        <select id="stockFilter">
+          <option value="all">Mostrar todos</option>
+          <option value="gt0">Solo stock total &gt; 0</option>
+          <option value="eq0">Solo stock total = 0</option>
+        </select>
+
+        <div class="btn-row">
+          <button class="btn-primary" id="refreshBtn">Actualizar dashboard</button>
+          <button class="btn-secondary" id="exportBtn" disabled>Exportar CSV</button>
+        </div>
+
+        <div id="statusBox" class="status"></div>
+
+        <div class="small-note">
+          <strong>Campos esperados en data.json:</strong><br>
+          • SKU<br>
+          • Nombre<br>
+          • StockMatriz<br>
+          • Costo<br>
+          • Precio40<br>
+          • Precio45<br>
+          • Precio50<br>
+          • Proveedor<br>
+          • Familia<br>
+          • StockTemporal<br>
+          • StockTotal
+        </div>
+      </div>
+
+      <div>
+        <div class="stats">
+          <div class="stat">
+            <div class="label">SKU consolidados</div>
+            <div class="value" id="statSku">0</div>
+          </div>
+          <div class="stat">
+            <div class="label">Stock matriz</div>
+            <div class="value" id="statMatriz">0</div>
+          </div>
+          <div class="stat">
+            <div class="label">Stock temporal</div>
+            <div class="value" id="statTemporal">0</div>
+          </div>
+          <div class="stat">
+            <div class="label">Stock total</div>
+            <div class="value" id="statTotal">0</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>Resultado consolidado</h2>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>SKU</th>
+                  <th>Nombre</th>
+                  <th class="right">Stock bodega matriz</th>
+                  <th class="right">Costo Prom. Peso Chileno</th>
+                  <th class="right">Precio recomendado 40%</th>
+                  <th class="right">Precio recomendado 45%</th>
+                  <th class="right">Precio recomendado 50%</th>
+                  <th>Proveedor</th>
+                  <th class="right">Stock bodega temporal</th>
+                </tr>
+              </thead>
+              <tbody id="tableBody">
+                <tr>
+                  <td colspan="9" class="center muted" style="padding: 28px;">Cargando información desde data.json...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let processedRows = [];
+    let filteredRows = [];
+    const DATA_URL = "data.json";
+
+    const refreshBtn = document.getElementById("refreshBtn");
+    const exportBtn = document.getElementById("exportBtn");
+    const tableBody = document.getElementById("tableBody");
+    const searchInput = document.getElementById("searchInput");
+    const providerFilter = document.getElementById("providerFilter");
+    const familyFilter = document.getElementById("familyFilter");
+    const stockFilter = document.getElementById("stockFilter");
+    const statusBox = document.getElementById("statusBox");
+
+    const statSku = document.getElementById("statSku");
+    const statMatriz = document.getElementById("statMatriz");
+    const statTemporal = document.getElementById("statTemporal");
+    const statTotal = document.getElementById("statTotal");
+
+    function showStatus(message, type = "ok") {
+      statusBox.className = `status show ${type}`;
+      statusBox.textContent = message;
+    }
+
+    function hideStatus() {
+      statusBox.className = "status";
+      statusBox.textContent = "";
+    }
+
+    function normalizeText(value) {
+      return String(value ?? "").trim();
+    }
+
+    function toNumber(value) {
+      if (value === null || value === undefined || value === "") return 0;
+      if (typeof value === "number") return value;
+
+      let str = String(value).trim().replace(/\s/g, "");
+      if (str.includes(",") && str.includes(".")) {
+        str = str.replace(/\./g, "").replace(/,/g, ".");
+      } else if (str.includes(",")) {
+        str = str.replace(/,/g, ".");
+      }
+
+      const num = Number(str);
+      return Number.isFinite(num) ? num : 0;
+    }
+
+    function roundPeso(value) {
+      return Math.round(toNumber(value));
+    }
+
+    function formatNumber(value) {
+      return roundPeso(value).toLocaleString("es-CL");
+    }
+
+    function recommendedPrice(cost, margin) {
+      const c = toNumber(cost);
+      if (!Number.isFinite(c) || c <= 0) return 0;
+      return roundPeso(c / (1 - margin));
+    }
+
+    function normalizeLoadedRows(rows) {
+      return rows.map(row => ({
+        SKU: normalizeText(row.SKU),
+        Nombre: normalizeText(row.Nombre),
+        StockMatriz: roundPeso(row.StockMatriz),
+        Costo: roundPeso(row.Costo),
+        Precio40: roundPeso(row.Precio40 || recommendedPrice(row.Costo, 0.40)),
+        Precio45: roundPeso(row.Precio45 || recommendedPrice(row.Costo, 0.45)),
+        Precio50: roundPeso(row.Precio50 || recommendedPrice(row.Costo, 0.50)),
+        Proveedor: normalizeText(row.Proveedor),
+        Familia: normalizeText(row.Familia),
+        StockTemporal: roundPeso(row.StockTemporal),
+        StockTotal: roundPeso(row.StockTotal ?? (toNumber(row.StockMatriz) + toNumber(row.StockTemporal)))
+      })).filter(r => r.SKU);
+    }
+
+    function populateFilterOptions() {
+      const providers = [...new Set(processedRows.map(r => normalizeText(r.Proveedor)).filter(Boolean))]
+        .sort((a, b) => a.localeCompare(b, "es", { sensitivity: "base" }));
+      const families = [...new Set(processedRows.map(r => normalizeText(r.Familia)).filter(Boolean))]
+        .sort((a, b) => a.localeCompare(b, "es", { sensitivity: "base" }));
+
+      providerFilter.innerHTML = '<option value="all">Todos los proveedores</option>' +
+        providers.map(value => `<option value="${escapeHtml(value)}">${escapeHtml(value)}</option>`).join("");
+
+      familyFilter.innerHTML = '<option value="all">Todas las familias</option>' +
+        families.map(value => `<option value="${escapeHtml(value)}">${escapeHtml(value)}</option>`).join("");
+    }
+
+    function applyFilters() {
+      const term = normalizeText(searchInput.value).toLowerCase();
+      const selectedProvider = providerFilter.value;
+      const selectedFamily = familyFilter.value;
+      const stockMode = stockFilter.value;
+
+      filteredRows = processedRows.filter(row => {
+        const matchesText = !term ||
+          row.SKU.toLowerCase().includes(term) ||
+          row.Nombre.toLowerCase().includes(term) ||
+          row.Proveedor.toLowerCase().includes(term) ||
+          row.Familia.toLowerCase().includes(term);
+
+        const matchesProvider = selectedProvider === "all" || row.Proveedor === selectedProvider;
+        const matchesFamily = selectedFamily === "all" || row.Familia === selectedFamily;
+
+        let matchesStock = true;
+        if (stockMode === "gt0") matchesStock = row.StockTotal > 0;
+        if (stockMode === "eq0") matchesStock = row.StockTotal === 0;
+
+        return matchesText && matchesProvider && matchesFamily && matchesStock;
+      });
+
+      renderTable(filteredRows);
+      updateStats(filteredRows);
+    }
+
+    function renderTable(rows) {
+      if (!rows.length) {
+        tableBody.innerHTML = `
+          <tr>
+            <td colspan="9" class="center muted" style="padding: 28px;">No hay registros para mostrar con los filtros actuales.</td>
+          </tr>
+        `;
+        return;
+      }
+
+      tableBody.innerHTML = rows.map(r => `
+        <tr>
+          <td><span class="pill">${escapeHtml(r.SKU)}</span></td>
+          <td>${escapeHtml(r.Nombre)}</td>
+          <td class="right">${formatNumber(r.StockMatriz)}</td>
+          <td class="right">${formatNumber(r.Costo)}</td>
+          <td class="right">${formatNumber(r.Precio40)}</td>
+          <td class="right">${formatNumber(r.Precio45)}</td>
+          <td class="right">${formatNumber(r.Precio50)}</td>
+          <td>${escapeHtml(r.Proveedor)}</td>
+          <td class="right">${formatNumber(r.StockTemporal)}</td>
+        </tr>
+      `).join("");
+    }
+
+    function updateStats(rows) {
+      const skuCount = rows.length;
+      const matriz = rows.reduce((acc, row) => acc + toNumber(row.StockMatriz), 0);
+      const temporal = rows.reduce((acc, row) => acc + toNumber(row.StockTemporal), 0);
+      const total = rows.reduce((acc, row) => acc + toNumber(row.StockTotal), 0);
+
+      statSku.textContent = formatNumber(skuCount);
+      statMatriz.textContent = formatNumber(matriz);
+      statTemporal.textContent = formatNumber(temporal);
+      statTotal.textContent = formatNumber(total);
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function exportResults() {
+      if (!filteredRows.length) return;
+
+      const headers = [
+        "SKU","Nombre","Stock bodega matriz","Costo Prom. Peso Chileno",
+        "Precio recomendado 40%","Precio recomendado 45%","Precio recomendado 50%",
+        "Proveedor","Familia","Stock bodega temporal"
+      ];
+
+      const lines = [headers.join(";")].concat(
+        filteredRows.map(r => [
+          r.SKU,
+          r.Nombre,
+          r.StockMatriz,
+          r.Costo,
+          r.Precio40,
+          r.Precio45,
+          r.Precio50,
+          r.Proveedor,
+          r.Familia,
+          r.StockTemporal
+        ].map(value => `"${String(value ?? "").replace(/"/g, '""')}"`).join(";"))
+      );
+
+      const blob = new Blob(["\ufeff" + lines.join("\n")], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "dashboard_stock_precios.csv";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    async function loadDashboardData() {
+      hideStatus();
+
+      try {
+        refreshBtn.disabled = true;
+        refreshBtn.textContent = "Actualizando...";
+
+        const response = await fetch(`${DATA_URL}?v=${Date.now()}`, { cache: "no-store" });
+        if (!response.ok) {
+          throw new Error(`No se pudo leer ${DATA_URL}. Verifica que exista en la misma carpeta del dashboard.`);
+        }
+
+        const rows = await response.json();
+        if (!Array.isArray(rows)) {
+          throw new Error("El archivo data.json no tiene un formato válido. Debe ser un arreglo de registros.");
+        }
+
+        processedRows = normalizeLoadedRows(rows);
+        filteredRows = [...processedRows];
+        populateFilterOptions();
+        renderTable(filteredRows);
+        updateStats(filteredRows);
+        exportBtn.disabled = false;
+        showStatus(`Dashboard actualizado correctamente. Registros cargados: ${processedRows.length}.`, "ok");
+        applyFilters();
+      } catch (error) {
+        processedRows = [];
+        filteredRows = [];
+        exportBtn.disabled = true;
+        renderTable([]);
+        updateStats([]);
+        showStatus(`No se pudo cargar la información: ${error.message}`, "error");
+      } finally {
+        refreshBtn.disabled = false;
+        refreshBtn.textContent = "Actualizar dashboard";
+      }
+    }
+
+    refreshBtn.addEventListener("click", loadDashboardData);
+    exportBtn.addEventListener("click", exportResults);
+    searchInput.addEventListener("input", applyFilters);
+    providerFilter.addEventListener("change", applyFilters);
+    familyFilter.addEventListener("change", applyFilters);
+    stockFilter.addEventListener("change", applyFilters);
+
+    loadDashboardData();
+  </script>
+</body>
+</html>
