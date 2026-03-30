@@ -1354,7 +1354,7 @@
   {
     "SKU": "7844110ST",
     "Nombre": "PINZA BIPOLAR DESECHABLE SUTTER 210MM - 1.0X6MM STD",
-    "StockMatriz": 25,
+    "StockMatriz": 26,
     "Costo": 166398,
     "Precio40": 277330,
     "Precio45": 302542,
@@ -1362,7 +1362,7 @@
     "Proveedor": "SUTTER",
     "Familia": "NEURO",
     "StockTemporal": 19,
-    "StockTotal": 44
+    "StockTotal": 45
   },
   {
     "SKU": "7844115SL",
@@ -2316,7 +2316,7 @@
   {
     "SKU": "ADSON 0.5",
     "Nombre": "PINZA BIPOLAR DESECHABLE HANDARK ADSON NS 10CM - 0.5MM",
-    "StockMatriz": 682,
+    "StockMatriz": 782,
     "Costo": 8977,
     "Precio40": 14962,
     "Precio45": 16322,
@@ -2324,7 +2324,7 @@
     "Proveedor": "HANDARK",
     "Familia": "NEURO",
     "StockTemporal": 0,
-    "StockTotal": 682
+    "StockTotal": 782
   },
   {
     "SKU": "ADSON 1",
@@ -4754,8 +4754,8 @@
     "Precio50": 629502,
     "Proveedor": "SPIWAY",
     "Familia": "NEURO",
-    "StockTemporal": 1,
-    "StockTotal": 23
+    "StockTemporal": 2,
+    "StockTotal": 24
   },
   {
     "SKU": "SPVA",
@@ -5163,7 +5163,7 @@
   {
     "SKU": "SW46130058",
     "Nombre": "CABLE BIPOLAR SW46130058",
-    "StockMatriz": 524,
+    "StockMatriz": 674,
     "Costo": 4088,
     "Precio40": 6813,
     "Precio45": 7433,
@@ -5171,7 +5171,7 @@
     "Proveedor": "SUTTER",
     "Familia": "NEURO",
     "StockTemporal": 55,
-    "StockTotal": 592
+    "StockTotal": 742
   },
   {
     "SKU": "TUD-30",
@@ -5709,7 +5709,7 @@
   {
     "SKU": "VDK-BV-A1",
     "Nombre": "VÁLVULA CANAL DE TRABAJO OLYMPUS - FUJINON",
-    "StockMatriz": 5363,
+    "StockMatriz": 5403,
     "Costo": 360,
     "Precio40": 600,
     "Precio45": 655,
@@ -5717,7 +5717,7 @@
     "Proveedor": "VEDKANG",
     "Familia": "GASTRO",
     "StockTemporal": 0,
-    "StockTotal": 5363
+    "StockTotal": 5403
   },
   {
     "SKU": "VDK-BV-B1",
@@ -5787,7 +5787,7 @@
   {
     "SKU": "VDK-CD-11-230-P",
     "Nombre": "CLIP HEMOSTASIA STANDARD 230 CM - 11 MM",
-    "StockMatriz": 679,
+    "StockMatriz": 699,
     "Costo": 14432,
     "Precio40": 24053,
     "Precio45": 26240,
@@ -5795,7 +5795,7 @@
     "Proveedor": "VEDKANG",
     "Familia": "GASTRO",
     "StockTemporal": 26,
-    "StockTotal": 705
+    "StockTotal": 725
   },
   {
     "SKU": "VDK-CD-13-230-P",
@@ -5813,7 +5813,7 @@
   {
     "SKU": "VDK-CD-16-230-P",
     "Nombre": "CLIP HEMOSTASIA JUMBO 230 CM - 16 MM",
-    "StockMatriz": 1668,
+    "StockMatriz": 1688,
     "Costo": 14490,
     "Precio40": 24150,
     "Precio45": 26345,
@@ -5821,7 +5821,7 @@
     "Proveedor": "VEDKANG",
     "Familia": "GASTRO",
     "StockTemporal": 35,
-    "StockTotal": 1703
+    "StockTotal": 1723
   },
   {
     "SKU": "VDK-CS-23-230-10-C3",
@@ -5839,7 +5839,7 @@
   {
     "SKU": "VDK-CS-23-230-15-C3",
     "Nombre": "ASA FRÍA 230 CM - 15 MM",
-    "StockMatriz": 274,
+    "StockMatriz": 284,
     "Costo": 5876,
     "Precio40": 9793,
     "Precio45": 10684,
@@ -5847,7 +5847,7 @@
     "Proveedor": "VEDKANG",
     "Familia": "GASTRO",
     "StockTemporal": 0,
-    "StockTotal": 274
+    "StockTotal": 284
   },
   {
     "SKU": "VDK-CS-23-230-15-C3R",
@@ -5969,7 +5969,7 @@
   {
     "SKU": "VDK-FD-23-230-A",
     "Nombre": "PINZA BIOPSIA CALIENTE SIN PUNTA 230 CM",
-    "StockMatriz": 48,
+    "StockMatriz": 50,
     "Costo": 7875,
     "Precio40": 13125,
     "Precio45": 14318,
@@ -5977,7 +5977,7 @@
     "Proveedor": "VEDKANG",
     "Familia": "GASTRO",
     "StockTemporal": 0,
-    "StockTotal": 297
+    "StockTotal": 299
   },
   {
     "SKU": "VDK-FG-23-230-A3",
